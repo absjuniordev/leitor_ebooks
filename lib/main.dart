@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leitor_ebooks/src/page/home_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +10,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Leitor de Ebooks',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(174, 4, 11, 73),
+          ),
         ),
-      ),
-    );
+        home: const HomePage());
   }
 }
