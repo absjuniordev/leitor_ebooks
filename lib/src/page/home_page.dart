@@ -30,36 +30,54 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 2,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.8),
-        itemCount: booksModel.length,
-        itemBuilder: (_, index) {
-          var book = booksModel[index];
-          return Card(
-            elevation: 3,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Image.network(
-                    book.coverUrl.toString(),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Text(
-                  book.title.toString(),
-                ),
-                Text(
-                  book.author.toString(),
-                ),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              "eBooks",
+              style: TextStyle(color: Colors.white),
             ),
-          );
-        },
+            backgroundColor: const Color.fromARGB(255, 7, 85, 255)),
+        body: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 10,
+              childAspectRatio: 0.8),
+          itemCount: booksModel.length,
+          itemBuilder: (_, index) {
+            var book = booksModel[index];
+            return Card(
+              elevation: 3,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      book.coverUrl.toString(),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    book.title.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    book.author.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
