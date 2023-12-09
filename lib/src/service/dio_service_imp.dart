@@ -29,7 +29,7 @@ class DioServiceImp implements DioService {
 
       print('Download concluído. Arquivo salvo em: $filePath');
     } catch (e) {
-      print('Erro durante o download: $e');
+      throw 'Erro durante o download: $e';
     }
   }
 }

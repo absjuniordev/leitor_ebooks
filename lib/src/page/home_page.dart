@@ -13,7 +13,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late DioService dioService;
-  var booksRepositoryImp = BooksRepositoryImp(DioServiceImp());
+  var booksRepositoryImp = BooksRepositoryImp(
+    DioServiceImp(),
+  );
   var booksModel = <BooksModel>[];
 
   @override
@@ -33,12 +35,13 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-            centerTitle: true,
-            title: const Text(
-              "eBooks",
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: const Color.fromARGB(255, 7, 85, 255)),
+          centerTitle: true,
+          title: const Text(
+            "eBooks",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: const Color.fromARGB(255, 7, 85, 255),
+        ),
         body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -50,30 +53,36 @@ class _HomePageState extends State<HomePage> {
             var book = booksModel[index];
             return Card(
               elevation: 3,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Image.network(
-                      book.coverUrl.toString(),
-                      fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  DioServiceImp dioServiceImp = DioServiceImp();
+                  dioServiceImp.downloadDio(book);
+                },
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Image.network(
+                        book.coverUrl.toString(),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    book.title.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  Text(
-                    book.author.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
+                    Text(
+                      book.title.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      book.author.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
