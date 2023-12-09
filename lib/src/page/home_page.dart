@@ -31,7 +31,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.8),
         itemCount: booksModel.length,
         itemBuilder: (_, index) {
           var book = booksModel[index];
@@ -39,7 +44,12 @@ class _HomePageState extends State<HomePage> {
             elevation: 3,
             child: Column(
               children: [
-                Image.network(book.coverUrl.toString()),
+                Expanded(
+                  child: Image.network(
+                    book.coverUrl.toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 Text(
                   book.title.toString(),
                 ),
