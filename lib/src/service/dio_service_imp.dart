@@ -10,12 +10,12 @@ class DioServiceImp implements DioService {
   }
 
   @override
-  void downloadDio(BooksModel book) async {
+  Future<String> downloadDio(BooksModel book) async {
     Dio dio = Dio();
     try {
       String tempDir = (await getTemporaryDirectory()).path;
       String? fileUrl = book.downloadUrl;
-      String filePath = '$tempDir/${book.title}.pdf';
+      String filePath = '$tempDir/${book.title}.epub';
 
       await dio.download(
         fileUrl!,
@@ -28,6 +28,7 @@ class DioServiceImp implements DioService {
       );
 
       print('Download concluído. Arquivo salvo em: $filePath');
+      return filePath;
     } catch (e) {
       throw 'Erro durante o download: $e';
     }

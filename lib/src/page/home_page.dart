@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leitor_ebooks/src/model/books_model.dart';
+import 'package:leitor_ebooks/src/page/viewer_ebook_page.dart';
 import 'package:leitor_ebooks/src/repository/books_repository_imp.dart';
 import 'package:leitor_ebooks/src/service/dio_service.dart';
 import 'package:leitor_ebooks/src/service/dio_service_imp.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DioServiceImp dioServiceImp = DioServiceImp();
   late DioService dioService;
   var booksRepositoryImp = BooksRepositoryImp(
     DioServiceImp(),
@@ -54,9 +56,20 @@ class _HomePageState extends State<HomePage> {
             return Card(
               elevation: 3,
               child: InkWell(
-                onTap: () {
-                  DioServiceImp dioServiceImp = DioServiceImp();
-                  dioServiceImp.downloadDio(book);
+                onTap: () async {
+                  String epubFilePath = await dioServiceImp.downloadDio(book);
+                  if (epubFilePath.isNotEmpty) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewerEbookPage(
+                          epubFilePath: epubFilePath,
+                          epubTitle: book.title.toString(),
+                        ),
+                      ),
+                    );
+                  }
                 },
                 child: Column(
                   children: [

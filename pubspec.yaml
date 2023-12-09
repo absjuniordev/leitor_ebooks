@@ -9,7 +9,7 @@ environment:
 dependencies:
   dio: ^5.4.0
   path_provider:
-  vocsy_epub_viewer:
+  vocsy_epub_viewer: ^2.0.0
   flutter:
     sdk: flutter
 
