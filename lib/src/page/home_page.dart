@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:leitor_ebooks/src/model/books_model.dart';
-import 'package:leitor_ebooks/src/page/viewer_ebook_page.dart';
 import 'package:leitor_ebooks/src/repository/books_repository_imp.dart';
 import 'package:leitor_ebooks/src/service/dio_service.dart';
 import 'package:leitor_ebooks/src/service/dio_service_imp.dart';
+import 'package:leitor_ebooks/src/service/vocsy_epub_open.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +14,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DioServiceImp dioServiceImp = DioServiceImp();
+  VocsyEpubOpen vocsyEpubOpen = VocsyEpubOpen();
   late DioService dioService;
+
   var booksRepositoryImp = BooksRepositoryImp(
     DioServiceImp(),
   );
@@ -59,16 +61,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () async {
                   String epubFilePath = await dioServiceImp.downloadDio(book);
                   if (epubFilePath.isNotEmpty) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ViewerEbookPage(
-                          epubFilePath: epubFilePath,
-                          epubTitle: book.title.toString(),
-                        ),
-                      ),
-                    );
+                    await vocsyEpubOpen.openDownloadedEpub(epubFilePath);
                   }
                 },
                 child: Column(

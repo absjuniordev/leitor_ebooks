@@ -12,6 +12,9 @@ dependencies:
   vocsy_epub_viewer: ^2.0.0
   flutter:
     sdk: flutter
+  permission_handler: ^11.1.0
+  device_info_plus: ^9.1.1
+
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +23,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  plugin:
+    platforms:
+      android:
+        package: com.vocsy.epub_viewer
+        pluginClass: EpubViewerPlugin
+      ios:
+        pluginClass: EpubViewerPlugin
+
+
+  assets:
+     - assets/epub/
