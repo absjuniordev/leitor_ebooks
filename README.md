@@ -1,3 +1,8 @@
-# leitor_ebooks
+# Eeitor de Ebooks
 
-A new Flutter project.
+## Este é um app capaz de realizar leitura de ebooks
+
+A versão para download, se enconte no diretroio assets/apk
+
+Basta baixar diretamente em seu celuar (Android) e realizar a instalação.
+
