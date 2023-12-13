@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     DioServiceImp(),
   );
   var booksModel = <BooksModel>[];
+  List<BooksModel> favoriteBooks = [];
 
   @override
   void initState() {
@@ -32,6 +33,16 @@ class _HomePageState extends State<HomePage> {
   carregarDados() async {
     booksModel = await booksRepositoryImp.getBooks();
     setState(() {});
+  }
+
+  void toggleFavorite(BooksModel book) {
+    setState(() {
+      if (favoriteBooks.contains(book)) {
+        favoriteBooks.remove(book);
+      } else {
+        favoriteBooks.add(book);
+      }
+    });
   }
 
   @override
@@ -66,6 +77,24 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            favoriteBooks.contains(book)
+                                ? Icons.bookmark
+                                : Icons.bookmark_border,
+                            color: favoriteBooks.contains(book)
+                                ? const Color.fromARGB(255, 158, 12, 1)
+                                : null,
+                          ),
+                          onPressed: () {
+                            toggleFavorite(book);
+                          },
+                        ),
+                      ],
+                    ),
                     Expanded(
                       child: Image.network(
                         book.coverUrl.toString(),
