@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leitor_ebooks/src/constants/custom_card.dart';
 import 'package:leitor_ebooks/src/model/books_model.dart';
 import 'package:leitor_ebooks/src/repository/books_repository_imp.dart';
 import 'package:leitor_ebooks/src/service/dio_service.dart';
@@ -91,61 +92,11 @@ class _HomePageState extends State<HomePage> {
                 itemCount: booksModel.length,
                 itemBuilder: (_, index) {
                   var book = booksModel[index];
-                  return Card(
-                    elevation: 3,
-                    child: InkWell(
-                      onTap: () async {
-                        String epubFilePath =
-                            await dioServiceImp.downloadDio(book);
-                        if (epubFilePath.isNotEmpty) {
-                          await vocsyEpubOpen.openDownloadedEpub(epubFilePath);
-                        }
-                      },
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const Spacer(),
-                              IconButton(
-                                iconSize: 40,
-                                icon: Icon(
-                                  favoriteBooks.contains(book)
-                                      ? Icons.star
-                                      : Icons.star_border,
-                                  color: favoriteBooks.contains(book)
-                                      ? const Color.fromARGB(255, 158, 12, 1)
-                                      : null,
-                                ),
-                                onPressed: () {
-                                  toggleFavorite(book);
-                                },
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: Image.network(
-                              book.coverUrl.toString(),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            book.title.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            book.author.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  return CustomCard(
+                    dioServiceImp: dioServiceImp,
+                    favoriteBooks: favoriteBooks,
+                    vocsyEpubOpen: vocsyEpubOpen,
+                    book: book,
                   );
                 },
               )
@@ -159,61 +110,11 @@ class _HomePageState extends State<HomePage> {
                 itemCount: favoriteBooks.length,
                 itemBuilder: (_, index) {
                   var book = favoriteBooks[index];
-                  return Card(
-                    elevation: 3,
-                    child: InkWell(
-                      onTap: () async {
-                        String epubFilePath =
-                            await dioServiceImp.downloadDio(book);
-                        if (epubFilePath.isNotEmpty) {
-                          await vocsyEpubOpen.openDownloadedEpub(epubFilePath);
-                        }
-                      },
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const Spacer(),
-                              IconButton(
-                                iconSize: 40,
-                                icon: Icon(
-                                  favoriteBooks.contains(book)
-                                      ? Icons.star
-                                      : Icons.star_border,
-                                  color: favoriteBooks.contains(book)
-                                      ? const Color.fromARGB(255, 158, 12, 1)
-                                      : null,
-                                ),
-                                onPressed: () {
-                                  toggleFavorite(book);
-                                },
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: Image.network(
-                              book.coverUrl.toString(),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            book.title.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            book.author.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  return CustomCard(
+                    dioServiceImp: dioServiceImp,
+                    favoriteBooks: favoriteBooks,
+                    vocsyEpubOpen: vocsyEpubOpen,
+                    book: book,
                   );
                 },
               ),
